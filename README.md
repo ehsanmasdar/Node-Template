@@ -7,5 +7,4 @@ hi
 <<<<<<< HEAD
 wedfgh
 =======
-dgkjgduk
 >>>>>>> this is a test
