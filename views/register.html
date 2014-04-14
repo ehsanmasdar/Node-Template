@@ -10,7 +10,7 @@
 	<!-- Don't have image yet -->
     <link rel="shortcut icon" href="SOMETIHNG NEEDED">
 
-    <title>Due Dates - Sign In</title>
+    <title>Due Dates - Register</title>
 
     <!-- Bootstrap core CSS -->
     <link href="../bootstrap/bootstrap.min.css" rel="stylesheet">
@@ -33,17 +33,25 @@
     <div class="container">
 
       <form class="form-signup" role="form">
-        <h1 class="form-signup-heading">Please Sign In</h1>
+        <h1 class="form-signup-heading">Please Register</h1>
 		<br>
 		<input type="text" class="form-control" placeholder="Username" required autofocus>
-		<br>
+		<input type="text" class="form-control" placeholder="Real Name" requred>
+		<br><br>
+        <input type="email" class="form-control" placeholder="Email address" required>
+		<br><br>
         <input type="password" class="form-control" placeholder="Password" required>
+		<input type="password" class="form-control" placeholder="Confirm Password" required>
 		<br><br>
 		<label class="checkbox">
-          <input type="checkbox" value="remember"> Remember Me
+		  <input type="checkbox" value="updates" checked> I wish to receive email updates
+		</label>
+		<br>
+		<label class="checkbox">
+          <input type="checkbox" value="agree" required> I agree to the <a href="../termsofservice.txt" target="_blank">Terms of Service</a>
         </label>
 		<br>
-		<button class="btn btn-lg btn-primary btn-block" type="submit">Log in</button>
+		<button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
       </form>
 
     </div> <!-- /container -->
