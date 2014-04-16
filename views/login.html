@@ -32,12 +32,12 @@
 
     <div class="container">
 
-      <form class="form-signup" role="form">
+      <form class="form-signup" role="form" action="/login/submit" method="post">
         <h1 class="form-signup-heading">Please Sign In</h1>
 		<br>
-		<input type="text" class="form-control" placeholder="Username" required autofocus>
+		<input name= "username" type="text" class="form-control" placeholder="Username" required autofocus>
 		<br>
-        <input type="password" class="form-control" placeholder="Password" required>
+        <input name = "password" type="password" class="form-control" placeholder="Password" required>
 		<br>
 		<label class="checkbox">
           <input type="checkbox" value="remember"> Remember Me

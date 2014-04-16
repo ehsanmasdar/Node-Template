@@ -44,6 +44,23 @@ app.post('/login/register/submit', function(req, res) {
   res.send('Registration sucessful');
 
 });
+
+app.post('/login/submit', function(req, res) {
+    var passHash = require('password-hash');
+    var connect = connection.query('SELECT * FROM users WHERE username = \'' + req.body.username + '\'' /*+ '\' AND password = \'' + passHash.generate(req.body.password) + '\''*/, function(err,rows,fields){
+      console.log(connect.sql);
+       if(err) throw err; 
+       console.log(rows[0]);
+       if(rows[0].username == req.body.username ){
+           res.send('Login Sucessful');
+       }
+       else{
+           res.send('Login Fail');
+       }
+    });
+    
+});
+
 app.use('/', routes);
 app.use('/login', login);
 /// catch 404 and forwarding to error handler
