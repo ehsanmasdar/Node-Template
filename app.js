@@ -35,6 +35,8 @@ app.use("/bootstrap", express.static(__dirname + '/bootstrap'));
 
 //Form
 app.post('/login/register/submit', function(req, res) {
+  var passHash = require('password-hash');
+  req.body.password = passHash.generate(req.body.password);
   var query = connection.query('INSERT INTO users SET ?', req.body, function(err, result) {
   });
   console.log(query.sql);
