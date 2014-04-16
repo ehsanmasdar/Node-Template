@@ -54,15 +54,14 @@ app.post('/login/register/submit', function(req, res) {
 
 app.post('/login/submit', function(req, res) {
     var passHash = require('password-hash');
-    var connect = connection.query('SELECT * FROM users WHERE username = \'' + req.body.username + '\'' /*+ '\' AND password = \'' + passHash.generate(req.body.password) + '\''*/, function(err,rows,fields){
+    var connect = connection.query('SELECT * FROM users WHERE username = \'' + req.body.username + '\'', function(err,rows,fields){
       console.log(connect.sql);
        if(err) throw err; 
-       console.log(rows[0]);
-       if(rows[0].username == req.body.username ){
+       if(rows[0] && rows[0].username == req.body.username && passHash.verify(req.body.password, rows[0].password)){
            res.send('Login Sucessful');
        }
        else{
-           res.send('Login Fail');
+           res.send('Login Failed');
        }
     });
     
