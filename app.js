@@ -38,7 +38,14 @@ app.post('/login/register/submit', function(req, res) {
   var passHash = require('password-hash');
   req.body.password = passHash.generate(req.body.password);
   req.body.confirmPass = null;
-  var query = connection.query('INSERT INTO users SET ?', req.body, function(err, result) {
+  var newBody = {
+  username: req.body.username,
+  realname: req.body.realname,
+  password: req.body.password,
+  updates: req.body.updates,
+  email: req.body.email
+  };
+  var query = connection.query('INSERT INTO users SET ?', newBody, function(err, result) {
   });
   console.log(query.sql);
   res.send('Registration sucessful');
