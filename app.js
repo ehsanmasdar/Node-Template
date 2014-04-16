@@ -18,6 +18,9 @@ connection.connect(function(err) {
   // connected! (unless `err` is set)
 });
 var app = express();
+var debug = require('debug')('my-application');
+
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -99,4 +102,16 @@ app.use(function(err, req, res, next) {
         error: {}
     });
 });
+
+var port = process.env.OPENSHIFT_NODEJS_PORT || 8080;
+if (typeof process.env.OPENSHIFT_NODEJS_PORT != "undefined"){
+    console.log("Detected Openshift!");
+    var ip = process.env.OPENSHIFT_NODEJS_IP || "127.0.0.1";
+    var server = app.listen(port,ip);
+}
+else{
+   var server = app.listen(port);
+}
+console.log(server.address());
+
 module.exports = app;
