@@ -45,7 +45,7 @@ app.post('/login/register/submit', function(req, res) {
   username: req.body.username,
   realname: req.body.realname,
   password: req.body.password,
-  updates: 1,
+  updates: req.body.updates ? 1 : 0,
   email: req.body.email
   };
   var query = connection.query('INSERT INTO users SET ?', newBody, function(err, result) {
