@@ -8,12 +8,23 @@ var bodyParser = require('body-parser');
 var routes = require('./routes/index');
 var login = require('./routes/login');
 var mysql      = require('mysql');
+if (typeof process.env.OPENSHIFT_NODEJS_PORT != "undefined"){
+
 var connection = mysql.createConnection({
   host     : process.env.OPENSHIFT_MYSQL_DB_HOST,
   user     : 'adminlyjUE1R',
   password : 'nnLHs3XMiatd',
   database : 'nodejs',
 });
+}
+else{
+    var connection = mysql.createConnection({
+  host     : 'us-cdbr-east-05.cleardb.net',
+  user     : 'bff2e14a87c6fd',
+  password : '1c2bd241',
+  database : 'heroku_20112ec37c851b9',
+});
+}
 connection.connect(function(err) {
   // connected! (unless `err` is set)
 });
