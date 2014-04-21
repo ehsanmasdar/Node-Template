@@ -16,6 +16,7 @@
     "ejs": "~1.0.0",
     "mysql": ">=2.1.1",
     "password-hash": "~1.2.1"
+    "nodemailer": ">=0.6.3"
   },
   "scripts":{
       "start": "node app.js"
