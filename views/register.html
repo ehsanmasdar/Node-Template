@@ -1,0 +1,86 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+	<!-- Don't have image yet -->
+    <link rel="shortcut icon" href="SOMETIHNG NEEDED">
+
+    <title>Due Dates - Register</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="../styles/signup.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy this line! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+    <div class="container">
+      <form class="form-signup" name="form-signup" role="form" action="/login/register/submit" method="post">
+        <h1 class="form-signup-heading">Please Register</h1>
+		<br>
+		<input type="text" class="form-control" name ="username" placeholder="Username" required autofocus>
+		<input type="text" class="form-control" name ="realname" placeholder="Real Name" requred>
+		<br><br>
+        <input type="email" class="form-control" name ="email" placeholder="Email address" required>
+		<br><br>
+        <input type="password" class="form-control" name ="password" placeholder="Password" onchange="
+		this.setCustomValidity(!checkPass() ? 'Password must be 8 characters long' : '')" required>
+		<input type="password" class="form-control" name = "confirmPass" placeholder="Confirm Password" required onchange="
+		this.setCustomValidity(!checkMatch() ? 'Passwords must match' : '')">
+		<br>
+		<label class="checkbox">
+		  <input type="checkbox" value="updates" name ="updates" checked> I wish to receive email updates
+		</label>
+		<label class="checkbox">
+          <input type="checkbox" value="agree" required> I agree to the <a href="../termsofservice.txt" target="_blank">Terms of Service</a>
+        </label>
+		<br>
+		<button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
+      </form>
+
+    </div> <!-- /container -->
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script type="text/javascript">
+        function checkPass(){
+            var pass1 = document.forms["form-signup"]["password"];
+            if(pass1.value == null){
+                return false;
+            }
+            if(pass1.value.length < 8){
+                return false;
+            }
+            return true;
+        }
+        
+        function checkMatch(){
+            var pass1 = document.forms["form-signup"]["password"];
+            var pass2 = document.forms["form-signup"]["confirmPass"];
+            if(pass1.value == pass2.value){
+                return true;
+            }
+            return false;
+        }
+        
+    </script>
+  </body>
+</html>
