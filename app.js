@@ -60,37 +60,37 @@ app.post('/login/register/submit', function(req, res) {
     require('crypto').randomBytes(48, function(ex, buf) {
          token = buf.toString('hex');
              console.log(token);
+         var smtpTransport = nodemailer.createTransport("SMTP",{
+         service: "Gmail",
+        auth: {
+            user: "duedatesstaff@gmail.com",
+            pass: "lasa2k16"
+        }
+        });
+        var url  = "http://duedates.ehsandev.com/token?";
+        console.log(token);
+        url = url + token;
+        console.log(url);
+    // setup e-mail data with unicode symbols
+        var mailOptions = {
+            from: "DueDateStaff <duedatesstaff@gmail.com>", // sender address
+            to: req.body.email, // list of receivers
+            subject: "Registration", // Subject line
+            text: "Click on the following link to complete your registration", // plaintext body
+            html: "<b>Click on the following link to complete your registration:</b>" + url // html body
+        }
+    
+        // send mail with defined transport object
+        smtpTransport.sendMail(mailOptions, function(error, response){
+            if(error){
+                console.log(error);
+            }else{
+                console.log("Message sent: " + response.message);
+            }
+        smtpTransport.close();
+        });
 
     });
-  var smtpTransport = nodemailer.createTransport("SMTP",{
-     service: "Gmail",
-    auth: {
-        user: "duedatesstaff@gmail.com",
-        pass: "lasa2k16"
-    }
-    });
-    var url  = "http://duedates.ehsandev.com/token?";
-    console.log(token);
-    url = url + token;
-    console.log(url);
-// setup e-mail data with unicode symbols
-var mailOptions = {
-    from: "DueDateStaff <duedatesstaff@gmail.com>", // sender address
-    to: req.body.email, // list of receivers
-    subject: "Registration", // Subject line
-    text: "Click on the following link to complete your registration", // plaintext body
-    html: "<b>Click on the following link to complete your registration:</b>" + url // html body
-}
-
-// send mail with defined transport object
-smtpTransport.sendMail(mailOptions, function(error, response){
-    if(error){
-        console.log(error);
-    }else{
-        console.log("Message sent: " + response.message);
-    }
-smtpTransport.close();
-});
 });
 
 app.post('/login/submit', function(req, res) {
