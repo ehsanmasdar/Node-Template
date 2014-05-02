@@ -4,23 +4,39 @@ var router = express.Router();
 var mysql      = require('mysql');
 var crypto = require('crypto');
 var connection;
-if (typeof process.env.OPENSHIFT_NODEJS_PORT != "undefined"){
-    connection = mysql.createConnection({
-      host     : process.env.OPENSHIFT_MYSQL_DB_HOST,
-      user     : 'adminlyjUE1R',
-      password : 'nnLHs3XMiatd',
-      database : 'nodejs',
-    });
-}
-else{
-    connection = mysql.createConnection({
-      host     : 'us-cdbr-east-05.cleardb.net',
-      user     : 'bff2e14a87c6fd',
-      password : '1c2bd241',
-      database : 'heroku_20112ec37c851b9',
-    });
-}
+connection = mysql.createConnection({
+      host     : 'ehsandev.com',
+      user     : 'duedates',
+      password : 'lasa2k16',
+      database : 'duedates',
+});
+var passport = require('passport')
+  , LocalStrategy = require('passport-local').Strategy;
 
+passport.use(new LocalStrategy(
+  function(username, password, done) {
+    var passHash = require('password-hash');
+    var connect = connection.query('SELECT * FROM users WHERE username = \'' + username + '\'', function(err,rows,fields){
+      console.log(connect.sql);
+      if (rows[0].username != username) {
+        return done(null, false, { message: 'Incorrect username.' });
+      }
+      if (!passHash.verify(password, rows[0].password)) {
+        return done(null, false, { message: 'Incorrect password.' });
+      }
+      return done(null, {id: 0 , username: username}); //TODO: ID IMPLEMENTATION!!!!!!!
+    });
+  }
+));
+passport.serializeUser(function(user, done) {
+  done(null, user.id);
+});
+
+passport.deserializeUser(function(id, done) {
+  User.findById(id, function(err, user) {
+    done(err, user);
+  });
+});
 /* GET users listing. */
 router.get('/', function(req, res) {
   res.render('login.html');
@@ -81,21 +97,7 @@ router.post('/register/submit', function(req, res) {
 
     });
 });
-
-router.post('/submit', function(req, res) {
-    console.log("request");
-    var passHash = require('password-hash');
-    var connect = connection.query('SELECT * FROM users WHERE username = \'' + req.body.username + '\'', function(err,rows,fields){
-      console.log(connect.sql);
-       if(err) throw err; 
-       if(rows[0] && rows[0].username == req.body.username && passHash.verify(req.body.password, rows[0].password)){
-           res.send('Login Sucessful');
-       }
-       else{
-           res.send('Login Failed');
-       }
-    });
-    
-});
-
+router.post('/submit', passport.authenticate('local', { successRedirect: '/',
+                                                    failureRedirect: '/login', 
+                                                    failureFlash: true }));
 module.exports = router;

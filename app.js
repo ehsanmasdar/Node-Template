@@ -7,24 +7,17 @@ var bodyParser = require('body-parser');
 
 var routes = require('./routes/index');
 var login = require('./routes/login');
+var passport = require('passport')
+  , LocalStrategy = require('passport-local').Strategy;
 var mysql      = require('mysql');
 var connection;
-if (typeof process.env.OPENSHIFT_NODEJS_PORT != "undefined"){
-    connection = mysql.createConnection({
-      host     : process.env.OPENSHIFT_MYSQL_DB_HOST,
-      user     : 'adminlyjUE1R',
-      password : 'nnLHs3XMiatd',
-      database : 'nodejs',
+connection = mysql.createConnection({
+      host     : 'ehsandev.com',
+      user     : 'duedates',
+      password : 'lasa2k16',
+      database : 'duedates',
     });
-}
-else{
-    connection = mysql.createConnection({
-      host     : 'us-cdbr-east-05.cleardb.net',
-      user     : 'bff2e14a87c6fd',
-      password : '1c2bd241',
-      database : 'heroku_20112ec37c851b9',
-    });
-}
+
 connection.connect(function(err) {
   // connected! (unless `err` is set)
 });
@@ -35,7 +28,8 @@ var debug = require('debug')('my-application');
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 app.engine('html', require('ejs').renderFile);
-
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(favicon());
 app.use(logger('dev'));
 app.use(bodyParser.json());
