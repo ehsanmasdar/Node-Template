@@ -18,7 +18,7 @@ passport.use(new LocalStrategy(
     var passHash = require('password-hash');
     var connect = connection.query('SELECT * FROM users WHERE username = \'' + username + '\'', function(err,rows,fields){
       console.log(connect.sql);
-      if (!rows[0]) {
+      if (!rows) {
         return done(null, false, { message: 'Incorrect username or password.' });
       }
       if (!passHash.verify(password, rows[0].password)) {
