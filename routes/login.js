@@ -61,8 +61,10 @@ router.post('/register/submit', function(req, res) {
   var response = " "
   var query = connection.query('INSERT INTO users SET ?', newBody, function(err, result) {
       response += err;
+	  response += result;
   });
   console.log(query.sql);
+  console.log(response);
   res.send('Registration sucessful' + response);
   var nodemailer = require("nodemailer");
 
