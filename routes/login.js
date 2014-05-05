@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
-var mysql      = require('mysql');
+var mysql = require('mysql');
 var crypto = require('crypto');
 var connection;
 connection = mysql.createConnection({
