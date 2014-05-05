@@ -3,6 +3,7 @@ var router = express.Router();
 
 var mysql = require('mysql');
 var crypto = require('crypto');
+var flash = require('connect-flash');
 var connection;
 connection = mysql.createConnection({
       host     : 'ehsandev.com',
