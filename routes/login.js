@@ -11,6 +11,13 @@ connection = mysql.createConnection({
       password : 'lasa2k16',
       database : 'duedates',
 });
+
+express.configure(function() {
+  express.use(express.cookieParser('keyboard cat'));
+  express.use(express.session({ cookie: { maxAge: 60000 }}));
+  express.use(flash());
+});
+
 var passport = require('passport')
   , LocalStrategy = require('passport-local').Strategy;
 
