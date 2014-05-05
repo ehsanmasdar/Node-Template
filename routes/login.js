@@ -18,11 +18,11 @@ passport.use(new LocalStrategy(
     var passHash = require('password-hash');
     var connect = connection.query('SELECT * FROM users WHERE username = \'' + username + '\'', function(err,rows,fields){
       console.log(connect.sql);
-      if (rows[0].username != username) {
-        return done(null, false, { message: 'Incorrect username.' });
+      if (!rows[0]) {
+        return done(null, false, { message: 'Incorrect username or password.' });
       }
       if (!passHash.verify(password, rows[0].password)) {
-        return done(null, false, { message: 'Incorrect password.' });
+        return done(null, false, { message: 'Incorrect username or password.' });
       }
       return done(null, {id: 0 , username: username}); //TODO: ID IMPLEMENTATION!!!!!!!
     });
