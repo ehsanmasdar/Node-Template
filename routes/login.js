@@ -12,7 +12,7 @@ connection = mysql.createConnection({
       database : 'duedates',
 });
 
-express.configure(function() {
+router.configure(function() {
   express.use(express.cookieParser('keyboard cat'));
   express.use(express.session({ cookie: { maxAge: 60000 }}));
   express.use(flash());
