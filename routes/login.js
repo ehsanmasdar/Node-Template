@@ -57,10 +57,12 @@ router.post('/register/submit', function(req, res) {
   updates: req.body.updates ? 1 : 0,
   email: req.body.email
   };
+  var response = " "
   var query = connection.query('INSERT INTO users SET ?', newBody, function(err, result) {
+      response += err;
   });
   console.log(query.sql);
-  res.send('Registration sucessful');
+  res.send('Registration sucessful' + response);
   var nodemailer = require("nodemailer");
 
 // create reusable transport method (opens pool of SMTP connections)
