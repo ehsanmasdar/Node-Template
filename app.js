@@ -20,6 +20,8 @@ connection = mysql.createConnection({
 
 connection.connect(function(err) {
   // connected! (unless `err` is set)
+   if(err != null)
+      console.log('Error: ' + err);
 });
 var app = express();
 var debug = require('debug')('my-application');
