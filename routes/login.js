@@ -3,7 +3,6 @@ var router = express.Router();
 
 var mysql = require('mysql');
 var crypto = require('crypto');
-var flash = require('connect-flash');
 var connection;
 connection = mysql.createConnection({
       host     : 'ehsandev.com',
@@ -20,7 +19,7 @@ passport.use(new LocalStrategy(
     var passHash = require('password-hash');
     var connect = connection.query('SELECT * FROM users WHERE username = \'' + username + '\'', function(err,rows,fields){
       console.log(connect.sql);
-      if (!rows) {
+      if (!rows || !rows[0]) {
         return done(null, false, { message: 'Incorrect username or password.' });
       }
       if (!passHash.verify(password, rows[0].password)) {

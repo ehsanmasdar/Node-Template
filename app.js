@@ -9,8 +9,10 @@ var routes = require('./routes/index');
 var login = require('./routes/login');
 var passport = require('passport')
   , LocalStrategy = require('passport-local').Strategy;
-var mysql      = require('mysql');
+var mysql = require('mysql');
+var flash = require('connect-flash');
 var connection;
+var session = require('express-session');
 connection = mysql.createConnection({
       host     : 'ehsandev.com',
       user     : 'duedates',
@@ -30,17 +32,18 @@ var debug = require('debug')('my-application');
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 app.engine('html', require('ejs').renderFile);
+app.use(flash());
+app.use(cookieParser());
+app.use(session({ secret: 'keyboard cat', cookie: { maxAge: 60000 }}));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(favicon());
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
-app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use("/styles", express.static(__dirname + '/styles'));
 app.use("/bootstrap", express.static(__dirname + '/bootstrap'));
-
 
 app.use('/', routes);
 app.use('/login', login);
