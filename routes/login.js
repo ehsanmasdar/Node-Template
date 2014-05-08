@@ -41,7 +41,12 @@ passport.deserializeUser(function(id, done) {
 
 /* GET users listing. */
 router.get('/', function(req, res) {
-  res.render('login.html',{ message: req.flash('signinflash') });
+  if (req.isAuthenticated()){
+        res.render('login.html',{ message: req.flash('signinflash' , welcome : "Welcome back, " + req.user.username });
+  }
+  else {
+      res.render('login.html',{ message: req.flash('signinflash') , welcome : "Please Sign in above"});
+  }
 });
 router.get('/register', function(req, res) {
   res.render('register.html');
