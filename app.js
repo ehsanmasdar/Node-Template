@@ -34,7 +34,7 @@ app.set('view engine', 'jade');
 app.engine('html', require('ejs').renderFile);
 app.use(flash());
 app.use(cookieParser());
-app.use(session({ secret: 'keyboard cat', cookie: { maxAge: 60000 }}));
+app.use(session({ secret: 'keyboard cat'}));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(favicon());

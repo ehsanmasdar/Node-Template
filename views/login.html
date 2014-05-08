@@ -41,7 +41,7 @@
           <a class="navbar-brand" href="#">DueDates</a>
         </div>
         <div class="collapse navbar-collapse">
-		  <form class="navbar-form navbar-right" role="form" action="/login/submit" method = "post"id="signin">
+		  <form class="navbar-form navbar-right" role="form" action="/login" method = "post"id="signin">
             <div class="form-group">
               <input name = "username" type="text" placeholder="Username" class="form-control">
             </div>
@@ -60,6 +60,10 @@
         </div><!--/.nav-collapse -->
       </div>
     </div>
+	<!-- show any messages that come back with authentication -->
+	<% if (message.length > 0) { %>
+		<div class="alert alert-danger"><%= message %></div>
+	<% } %>
 	<div id="teacherlist" align="center">
 		<ul>
 		<br>Mrs. Aguayotabor</br>

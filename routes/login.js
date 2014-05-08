@@ -14,18 +14,18 @@ connection = mysql.createConnection({
 var passport = require('passport')
   , LocalStrategy = require('passport-local').Strategy;
 
-passport.use(new LocalStrategy(
-  function(username, password, done) {
+passport.use(new LocalStrategy({ passReqToCallback : true},
+  function(req,username, password, done) {
     var passHash = require('password-hash');
     var connect = connection.query('SELECT * FROM users WHERE username = \'' + username + '\'', function(err,rows,fields){
       console.log(connect.sql);
       if (!rows || !rows[0]) {
-        return done(null, false, { message: 'Incorrect username or password.' });
+        return done(null, false, req.flash('signinflash','Incorrect username or password.'));
       }
       if (!passHash.verify(password, rows[0].password)) {
-        return done(null, false, { message: 'Incorrect username or password.' });
+        return done(null, false, req.flash('signinflash','Incorrect username or password.'));
       }
-      return done(null, {id: 0 , username: username}); //TODO: ID IMPLEMENTATION!!!!!!!
+      return done(null, {id: rows[0].id , username: username}); //TODO: ID IMPLEMENTATION!!!!!!!
     });
   }
 ));
@@ -34,18 +34,18 @@ passport.serializeUser(function(user, done) {
 });
 
 passport.deserializeUser(function(id, done) {
-  User.findById(id, function(err, user) {
-    done(err, user);
+  var connect = connection.query('SELECT * FROM users WHERE id = \'' + id + '\'', function(err,rows,fields){
+    done(err, {id : id, username : rows[0].username});
   });
 });
+
 /* GET users listing. */
 router.get('/', function(req, res) {
-  res.render('login.html');
+  res.render('login.html',{ message: req.flash('signinflash') });
 });
 router.get('/register', function(req, res) {
   res.render('register.html');
 });
-
 //Form
 router.post('/register/submit', function(req, res) {
   var passHash = require('password-hash');
@@ -56,7 +56,8 @@ router.post('/register/submit', function(req, res) {
   realname: req.body.realname,
   password: req.body.password,
   updates: req.body.updates ? 1 : 0,
-  email: req.body.email
+  email: req.body.email,
+  id : passHash.generate(req.body.username)
   };
   var response = " "
   var query = connection.query('INSERT INTO users SET ?', newBody, function(err, result) {
@@ -102,7 +103,7 @@ router.post('/register/submit', function(req, res) {
 
     });
 });
-router.post('/submit', passport.authenticate('local', { successRedirect: '/',
+router.post('/', passport.authenticate('local', { successRedirect: '/profile',
                                                     failureRedirect: '/login', 
                                                     failureFlash: true }));
 module.exports = router;
