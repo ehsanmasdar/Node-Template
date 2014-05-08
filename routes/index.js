@@ -14,4 +14,8 @@ router.get('/profile', function(req, res) {
 			user :  req.user // get the user out of session and pass to template
 	});
 });
+router.get('/logout', function(req, res) {
+	req.logout();
+	res.redirect('/');
+});
 module.exports = router;
