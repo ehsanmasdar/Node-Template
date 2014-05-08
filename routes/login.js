@@ -25,7 +25,7 @@ passport.use(new LocalStrategy({ passReqToCallback : true},
       if (!passHash.verify(password, rows[0].password)) {
         return done(null, false, req.flash('signinflash','Incorrect username or password.'));
       }
-      return done(null, {id: rows[0].id , username: username}); //TODO: ID IMPLEMENTATION!!!!!!!
+      return done(null, {id: rows[0].id , username: username, realname: rows[0].realname}); //TODO: ID IMPLEMENTATION!!!!!!!
     });
   }
 ));
@@ -35,17 +35,17 @@ passport.serializeUser(function(user, done) {
 
 passport.deserializeUser(function(id, done) {
   var connect = connection.query('SELECT * FROM users WHERE id = \'' + id + '\'', function(err,rows,fields){
-    done(err, {id : id, username : rows[0].username});
+    done(err, {id : id, username : rows[0].username, realname : rows[0].realname});
   });
 });
 
 /* GET users listing. */
 router.get('/', function(req, res) {
   if (req.isAuthenticated()){
-        res.render('login.html',{ message: req.flash('signinflash' , welcome : "Welcome back, " + req.user.username });
+    res.render('login.html',{ message: req.flash('signinflash'), welcome: "Welcome back, " + req.user.realname , isauthed: true});
   }
   else {
-      res.render('login.html',{ message: req.flash('signinflash') , welcome : "Please Sign in above"});
+    res.render('login.html',{ message: req.flash('signinflash'), welcome: "Please Sign in above", isauthed: false});
   }
 });
 router.get('/register', function(req, res) {
@@ -108,7 +108,7 @@ router.post('/register/submit', function(req, res) {
 
     });
 });
-router.post('/', passport.authenticate('local', { successRedirect: '/profile',
+router.post('/', passport.authenticate('local', { successRedirect: '/',
                                                     failureRedirect: '/login', 
                                                     failureFlash: true }));
 module.exports = router;
