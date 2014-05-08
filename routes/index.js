@@ -4,10 +4,10 @@ var router = express.Router();
 /* GET home page. */
 router.get('/', function(req, res) {
   if (req.isAuthenticated()){
-  	  	res.render('login.html',{ message: req.flash('signinflash' , welcome : "Welcome back, " + req.user.username });
+  	  	res.render('login.html',{ message: req.flash('signinflash')}, {welcome : "Welcome back, " + req.user.username });
   }
   else {
-  		res.render('login.html',{ message: req.flash('signinflash') , welcome : "Please Sign in above"});
+  		res.render('login.html',{ message: req.flash('signinflash')}, {welcome : "Please Sign in above"});
   }
 });
 router.get('/register', function(req, res) {
