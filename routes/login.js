@@ -91,7 +91,7 @@ router.post('/register/submit', function(req, res) {
         console.log(query.sql);
         console.log(response);
         res.send('Registration sucessful' + response);
-        var url  = "http://duedates.ehsandev.com/token?id=";
+        var url  = "http://ehsandev.com:8080/token?id=";
         url = url + token;
         // setup e-mail data with unicode symbols
         var mailOptions = {
