@@ -25,6 +25,9 @@ passport.use(new LocalStrategy({ passReqToCallback : true},
       if (!passHash.verify(password, rows[0].password)) {
         return done(null, false, req.flash('signinflash','Incorrect username or password.'));
       }
+      if (rows[0].verified != 1) {
+        return done(null, false, req.flash('signinflash','You must verify your email before you can sign in.'));
+      }
       return done(null, {id: rows[0].id , username: username, realname: rows[0].realname}); //TODO: ID IMPLEMENTATION!!!!!!!
     });
   }
@@ -54,40 +57,43 @@ router.get('/register', function(req, res) {
 //Form
 router.post('/register/submit', function(req, res) {
   var passHash = require('password-hash');
-  req.body.password = passHash.generate(req.body.password);
-  req.body.confirmPass = null;
-  var newBody = {
-  username: req.body.username,
-  realname: req.body.realname,
-  password: req.body.password,
-  updates: req.body.updates ? 1 : 0,
-  email: req.body.email,
-  id : passHash.generate(req.body.username)
-  };
-  var response = " "
-  var query = connection.query('INSERT INTO users SET ?', newBody, function(err, result) {
-      response += err;
-	  response += result;
-  });
-  console.log(query.sql);
-  console.log(response);
-  res.send('Registration sucessful' + response);
+
   var nodemailer = require("nodemailer");
 
-// create reusable transport method (opens pool of SMTP connections)
     var token = "";
-    require('crypto').randomBytes(48, function(ex, buf) {
-         token = buf.toString('hex');
-         var smtpTransport = nodemailer.createTransport("SMTP",{
-         service: "Gmail",
-        auth: {
-            user: "duedatesstaff@gmail.com",
-            pass: "lasa2k16"
-        }
+    require('crypto').randomBytes(12, function(ex, buf) {
+        token = buf.toString('hex');
+        // create reusable transport method (opens pool of SMTP connections)
+        var smtpTransport = nodemailer.createTransport("SMTP",{
+            service: "Gmail",
+            auth: {
+                user: "duedatesstaff@gmail.com",
+                pass: "lasa2k16"
+            }
         });
-        var url  = "http://duedates.ehsandev.com/token?";
+        req.body.password = passHash.generate(req.body.password);
+        req.body.confirmPass = null;
+        var newBody = {
+            username: req.body.username,
+            realname: req.body.realname,
+            password: req.body.password,
+            updates: req.body.updates ? 1 : 0,
+            email: req.body.email,
+            id : passHash.generate(req.body.username),
+            emailtoken: token,
+            verified : 0
+        };
+        var response = " ";
+        var query = connection.query('INSERT INTO users SET ?', newBody, function(err, result) {
+            response += err;
+	        response += result;
+        });
+        console.log(query.sql);
+        console.log(response);
+        res.send('Registration sucessful' + response);
+        var url  = "http://duedates.ehsandev.com/token?id=";
         url = url + token;
-    // setup e-mail data with unicode symbols
+        // setup e-mail data with unicode symbols
         var mailOptions = {
             from: "DueDateStaff <duedatesstaff@gmail.com>", // sender address
             to: req.body.email, // list of receivers
