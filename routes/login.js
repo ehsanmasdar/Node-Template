@@ -3,6 +3,7 @@ var router = express.Router();
 
 var mysql = require('mysql');
 var crypto = require('crypto');
+var bcrypt = require('bcrypt');
 var connection;
 connection = mysql.createConnection({
       host     : 'ehsandev.com',
@@ -16,13 +17,13 @@ var passport = require('passport')
 
 passport.use(new LocalStrategy({ passReqToCallback : true},
   function(req,username, password, done) {
-    var passHash = require('password-hash');
+    
     var connect = connection.query('SELECT * FROM users WHERE username = \'' + username + '\'', function(err,rows,fields){
       console.log(connect.sql);
       if (!rows || !rows[0]) {
         return done(null, false, req.flash('signinflash','Incorrect username or password.'));
       }
-      if (!passHash.verify(password, rows[0].password)) {
+      if (!bcrypt.compareSync(password, rows[0].password)) {
         return done(null, false, req.flash('signinflash','Incorrect username or password.'));
       }
       if (rows[0].verified != 1) {
@@ -56,8 +57,6 @@ router.get('/register', function(req, res) {
 });
 //Form
 router.post('/register/submit', function(req, res) {
-  var passHash = require('password-hash');
-
   var nodemailer = require("nodemailer");
 
     var token = "";
@@ -71,7 +70,8 @@ router.post('/register/submit', function(req, res) {
                 pass: "lasa2k16"
             }
         });
-        req.body.password = passHash.generate(req.body.password);
+        var salt = bcrypt.genSaltSync(10);
+        req.body.password = bcrypt.hashSync(req.body.password, salt);
         req.body.confirmPass = null;
         var newBody = {
             username: req.body.username,
@@ -79,7 +79,7 @@ router.post('/register/submit', function(req, res) {
             password: req.body.password,
             updates: req.body.updates ? 1 : 0,
             email: req.body.email,
-            id : passHash.generate(req.body.username),
+            id : bcrypt.hashSync(req.body.username,salt),
             emailtoken: token,
             verified : 0
         };
