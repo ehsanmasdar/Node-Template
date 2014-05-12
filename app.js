@@ -44,6 +44,7 @@ app.use(bodyParser.urlencoded());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use("/styles", express.static(__dirname + '/styles'));
 app.use("/bootstrap", express.static(__dirname + '/bootstrap'));
+app.use("/static", express.static(__dirname + '/static'));
 
 app.use('/', routes);
 app.use('/login', login);
