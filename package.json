@@ -23,7 +23,7 @@
     "passport-google-oauth" : "~0.1.5",
     "connect-flash": ">=0.1.1",
     "express-session": ">=1.0.4",
-    "bcrypt": "latest"
+    "bcrypt": "~0.7.8"
   },
   "scripts":{
       "start": "node app.js"
