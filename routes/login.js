@@ -53,7 +53,7 @@ router.get('/', function(req, res) {
   }
 });
 router.get('/register', function(req, res) {
-  res.render('register.html',{ message: req.flash('signupflash')});
+  res.render('register.html',{ message: req.flash('signupflash'), usererror: req.usererror});
 });
 //Form
 router.post('/register/', function(req, res) {
@@ -88,6 +88,7 @@ router.post('/register/', function(req, res) {
 			console.log(connect.sql);
 			if (rows && rows[0]) {
 				req.flash('signupflash','You must verify your email before you can sign in.');
+				req.usererror = true;
 				res.redirect('/register');
 			}
 			else {
