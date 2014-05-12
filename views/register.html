@@ -32,7 +32,10 @@
 
     <div class="container">
       <form class="form-signup" name="form-signup" role="form" action="/login/register/" method="post">
-        <h1 class="form-signup-heading">Please Register</h1>
+        <h1 class="form-signup-heading">Create an account.</h1>
+        <% if (message.length > 0) { %>
+		<div class="alert alert-danger"><%= message %></div>
+	<% } %>
 		<br>
 		<input type="text" class="form-control" name ="username" placeholder="Username" required autofocus>
 		<input type="text" class="form-control" name ="realname" placeholder="Real Name" requred>
@@ -53,9 +56,7 @@
 		<br>
 		<button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
       </form>
-	<% if (message.length > 0) { %>
-		<div class="alert alert-danger"><%= message %></div>
-	<% } %>
+
     </div> <!-- /container -->
 
 
