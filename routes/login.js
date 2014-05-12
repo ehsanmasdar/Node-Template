@@ -84,7 +84,7 @@ router.post('/register/submit', function(req, res) {
             verified : 0
         };
         var response = " ";		
-		var connect = connection.query('SELECT * FROM users WHERE username = \'' + username + '\'', function(err,rows,fields){
+		var connect = connection.query('SELECT * FROM users WHERE username = \'' + req.body.username + '\'', function(err,rows,fields){
 			console.log(connect.sql);
 			if (!rows || !rows[0]) {
 				req.flash('signupflash','You must verify your email before you can sign in.')
