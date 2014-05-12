@@ -87,7 +87,7 @@ router.post('/register/', function(req, res) {
 		var connect = connection.query('SELECT * FROM users WHERE username = \'' + req.body.username + '\'', function(err,rows,fields){
 			console.log(connect.sql);
 			if (rows && rows[0]) {
-				req.flash('signupflash','You must verify your email before you can sign in.');
+				req.flash('signupflash','Username already in use.');
 				res.redirect('/register');
 			}
 			else {
