@@ -56,7 +56,7 @@ router.get('/register', function(req, res) {
   res.render('register.html',{ message: req.flash('signupflash')});
 });
 //Form
-router.post('/register/submit', function(req, res) {
+router.post('/register/', function(req, res) {
   var nodemailer = require("nodemailer");
 
     var token = "";
