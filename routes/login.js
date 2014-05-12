@@ -53,7 +53,7 @@ router.get('/', function(req, res) {
   }
 });
 router.get('/register', function(req, res) {
-  res.render('register.html');
+  res.render('register.html',{ message: req.flash('signinflash')});
 });
 //Form
 router.post('/register/submit', function(req, res) {
@@ -83,35 +83,43 @@ router.post('/register/submit', function(req, res) {
             emailtoken: token,
             verified : 0
         };
-        var response = " ";
-        var query = connection.query('INSERT INTO users SET ?', newBody, function(err, result) {
-            response += err;
-	        response += result;
-        });
-        console.log(query.sql);
-        console.log(response);
-        res.send('Registration sucessful' + response);
-        var url  = "http://ehsandev.com:8080/token?id=";
-        url = url + token;
-        // setup e-mail data with unicode symbols
-        var mailOptions = {
-            from: "DueDateStaff <duedatesstaff@gmail.com>", // sender address
-            to: req.body.email, // list of receivers
-            subject: "Registration", // Subject line
-            text: "Click on the following link to complete your registration", // plaintext body
-            html: "<b>Click on the following link to complete your registration:</b>" + url // html body
-        }
+        var response = " ";		
+		var connect = connection.query('SELECT * FROM users WHERE username = \'' + username + '\'', function(err,rows,fields){
+			console.log(connect.sql);
+			if (!rows || !rows[0]) {
+				req.flash('signupflash','You must verify your email before you can sign in.')
+			}
+			else {
+				var query = connection.query('INSERT INTO users SET ?', newBody, function(err, result) {
+					response += err;
+					response += result;
+				});
+				console.log(query.sql);
+				console.log(response);
+				res.redirect('/');
+				var url  = "http://ehsandev.com:8080/token?id=";
+				url = url + token;
+				// setup e-mail data with unicode symbols
+				var mailOptions = {
+					from: "DueDateStaff <duedatesstaff@gmail.com>", // sender address
+					to: req.body.email, // list of receivers
+					subject: "Registration", // Subject line
+					text: "Click on the following link to complete your registration", // plaintext body
+					html: "<b>Click on the following link to complete your registration:</b>" + url // html body
+				}
     
-        // send mail with defined transport object
-        smtpTransport.sendMail(mailOptions, function(error, response){
-            if(error){
-                console.log(error);
-            }else{
-                console.log("Message sent: " + response.message);
-            }
-        smtpTransport.close();
-        });
-
+				// send mail with defined transport object
+				smtpTransport.sendMail(mailOptions, function(error, response){
+					if(error){
+						console.log(error);
+					}else{
+						console.log("Message sent: " + response.message);
+					}
+					smtpTransport.close();
+				});
+			}
+		});
+        
     });
 });
 router.post('/', passport.authenticate('local', { successRedirect: '/',

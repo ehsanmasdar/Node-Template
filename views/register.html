@@ -53,7 +53,9 @@
 		<br>
 		<button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
       </form>
-
+	<% if (message.length > 0) { %>
+		<div class="alert alert-danger"><%= message %></div>
+	<% } %>
     </div> <!-- /container -->
 
 
