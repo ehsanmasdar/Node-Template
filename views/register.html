@@ -37,7 +37,13 @@
 		<div class="alert alert-danger"><%= message %></div>
 	<% } %>
 		<br>
-		<input type="text" class="form-control" name ="username" placeholder="Username" required autofocus>
+		<% if (usererror) %>
+			<div class="form-group has-error has-feedback">
+				<input type="text" class="form-control" name ="username" placeholder="Username" required autofocus>
+			</div>
+		<% } else{ %>
+			<input type="text" class="form-control" name ="username" placeholder="Username" required autofocus>
+		<% } %>
 		<input type="text" class="form-control" name ="realname" placeholder="Real Name" requred>
 		<br><br>
         <input type="email" class="form-control" name ="email" placeholder="Email address" required>
