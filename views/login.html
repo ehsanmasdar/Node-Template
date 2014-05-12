@@ -56,12 +56,15 @@
           <% }  else { %>
           	<form class="navbar-form navbar-right" role="form" action="/logout" id="signout">
           	     <button type="submit" class="btn btn-default">Logout</button>
+				   <h3 class="text-muted"><%= welcome %></h3>
           	 </form>
          <% } %>
           <ul class="nav navbar-nav">
             <li class="active"><a href="#">Home</a></li>
             <li><a href="#about">Settings</a></li>
-            <li><a href="#contact">Account</a></li>
+			<%if(isauthed){%>
+				<li><a href="./profile">Account</a></li> 
+			<%}%>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
@@ -78,11 +81,11 @@
 			</p>
 		</div>
     <% } %>
-    <h1  align="center"><%= welcome %>
+    <!--<h1  align="center"><%= welcome %>
         <% if (isauthed) { %>
             You can find your profile <a href="./profile">here</a>
         <% } %>
-    </h1>
+    </h1>-->
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
