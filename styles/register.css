@@ -13,6 +13,10 @@ body {
   margin-bottom: 10px;
   color: #444444;
 }
+.has-feedback .form-control-feedback {
+    position: absolute;
+    top: 3px;
+}
 
 .form-signup .checkbox {
   margin-bottom: 10px;
