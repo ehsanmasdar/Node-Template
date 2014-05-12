@@ -87,7 +87,7 @@ router.post('/register/submit', function(req, res) {
 		var connect = connection.query('SELECT * FROM users WHERE username = \'' + req.body.username + '\'', function(err,rows,fields){
 			console.log(connect.sql);
 			if (rows && rows[0]) {
-				req.flash('signupflash','You must verify your email before you can sign in.');
+				res.render('login.html',{ message: req.flash('signupflash','You must verify your email before you can sign in.')});
 			}
 			else {
 				var query = connection.query('INSERT INTO users SET ?', newBody, function(err, result) {
