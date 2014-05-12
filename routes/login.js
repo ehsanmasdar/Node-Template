@@ -88,8 +88,7 @@ router.post('/register/', function(req, res) {
 			console.log(connect.sql);
 			if (rows && rows[0]) {
 				req.flash('signupflash','You must verify your email before you can sign in.');
-				req.usererror = true;
-				res.redirect('/register');
+				res.redirect('/register',{usererror: true});
 			}
 			else {
 				var query = connection.query('INSERT INTO users SET ?', newBody, function(err, result) {
