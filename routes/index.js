@@ -31,12 +31,15 @@ router.get('/register', function(req, res) {
   res.redirect('login/register');
 });
 router.get('/settings', function(req, res) {
-  res.render('settings.html');
+  res.render('settings.html', {
+			isauthed: req.isAuthenticated() 
+		});
 });
 router.get('/profile', isLoggedIn, function(req, res) {
   console.log(req.user);
   res.render('profile.html',{
-			user :  req.user // get the user out of session and pass to template
+			user :  req.user, // get the user out of session and pass to template
+			isauthed: req.isAuthenticated() 
 	});
 });
 router.get('/logout', function(req, res) {
