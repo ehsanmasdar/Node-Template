@@ -27,14 +27,14 @@ router.get('/token', function(req, res) {
    });
   res.redirect('/');
 });
-router.get('/register', function(req, res) {
+router.get('/register',  function(req, res) {
   res.redirect('login/register');
 });
-router.get('/settings', function(req, res) {
-  res.render('settings.html', {
+router.get('/support',function(req, res) {
+	res.render('support.html', {
 			isauthed: req.isAuthenticated(), 
 			welcome : req.user.username
-		});
+	});
 });
 router.get('/profile', isLoggedIn, function(req, res) {
   console.log(req.user);
@@ -56,6 +56,7 @@ function isLoggedIn(req, res, next) {
 		return next();
 
 	// if they aren't redirect them to the home page
+	req.flash('signinflash','You must register before acesssing this page');
 	res.redirect('/');
 }
 
