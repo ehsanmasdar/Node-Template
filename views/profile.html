@@ -24,7 +24,6 @@
         </div>
         <div class="collapse navbar-collapse">
              <% if (!isauthed) { %>
-
 	    	  <form class="navbar-form navbar-right" role="form" action="/login" method = "post"id="signin">
                <div class="form-group">
                 <input name = "username" type="text" placeholder="Username" class="form-control">
@@ -42,10 +41,10 @@
 				<h3 class="navbar-form navbar-right"><font color="white"><%= welcome %></font></h3>
          <% } %>
           <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Home</a></li>
-            <li><a href="./settings">Settings</a></li>
+            <li><a href="/">Home</a></li>
+            <li><a href="/settings">Settings</a></li>
 			<%if(isauthed){%>
-				<li><a href="./profile">Account</a></li> 
+				<li class="active"><a href="/profile">Account</a></li> 
 			<%}%>
           </ul>
         </div><!--/.nav-collapse -->
