@@ -31,6 +31,7 @@ router.get('/register',  function(req, res) {
   res.redirect('login/register');
 });
 router.get('/support',function(req, res) {
+	console.log(req.user);
 	res.render('support.html', {
 			isauthed: req.isAuthenticated(),
 			welcome : req.user.username
