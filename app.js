@@ -98,7 +98,7 @@ app.use(function(err, req, res, next){
   res.render('500', { error: err });
 });
 
-var port = process.env.OPENSHIFT_NODEJS_PORT || 8080;
+var port = process.env.OPENSHIFT_NODEJS_PORT || 8081;
 if (typeof process.env.OPENSHIFT_NODEJS_PORT != "undefined"){
     console.log("Detected Openshift!");
     var ip = process.env.OPENSHIFT_NODEJS_IP || "127.0.0.1";
