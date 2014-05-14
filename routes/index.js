@@ -32,7 +32,9 @@ router.get('/register', function(req, res) {
 });
 router.get('/settings', function(req, res) {
   res.render('settings.html', {
-			isauthed: req.isAuthenticated() 
+			user :  req.user, // get the user out of session and pass to template
+			isauthed: req.isAuthenticated(), 
+			welcome : req.user.username
 		});
 });
 router.get('/profile', isLoggedIn, function(req, res) {
