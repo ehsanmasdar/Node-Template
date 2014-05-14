@@ -39,7 +39,8 @@ router.get('/profile', isLoggedIn, function(req, res) {
   console.log(req.user);
   res.render('profile.html',{
 			user :  req.user, // get the user out of session and pass to template
-			isauthed: req.isAuthenticated() 
+			isauthed: req.isAuthenticated(), 
+			welcome : user.username
 	});
 });
 router.get('/logout', function(req, res) {
