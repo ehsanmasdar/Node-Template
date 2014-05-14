@@ -11,7 +11,7 @@ connection = mysql.createConnection({
 /* GET home page. */
 router.get('/', function(req, res) {
   if (req.isAuthenticated()){
-    res.render('login.html',{ message: req.flash('signinflash'), welcome: req.user.realname , isauthed: true});
+    res.render('login.html',{ message: req.flash('signinflash'), welcome: req.user.username , isauthed: true});
   }
   else {
     res.render('login.html',{ message: req.flash('signinflash'), welcome: "Please Sign in above", isauthed: false});
@@ -31,8 +31,9 @@ router.get('/register',  function(req, res) {
   res.redirect('login/register');
 });
 router.get('/support',function(req, res) {
+	console.log(req.user);
 	res.render('support.html', {
-			isauthed: req.isAuthenticated(), 
+			isauthed: req.isAuthenticated(),
 			welcome : req.user.username
 	});
 });

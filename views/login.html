@@ -51,7 +51,7 @@
                 <input name = "password" type="password" placeholder="Password" class="form-control">
                </div>
                <button type="submit" class="btn btn-success">Sign in</button>
-	           <input class="btn btn-s btn-info" type="button" value="Sign up" onClick="document.location.href='./login/register';">
+	           <input class="btn btn-s btn-info" type="button" value="Sign up" onClick="document.location.href='/login/register';">
             </form>
           <% }  else { %>
           	<form class="navbar-form navbar-right" role="form" action="/logout" id="signout">
@@ -61,10 +61,10 @@
          <% } %>
           <ul class="nav navbar-nav">
             <li class="active"><a href="#">Home</a></li>
-            <li><a href="./support">Support</a></li>
 			<%if(isauthed){%>
-				<li><a href="./profile">Account</a></li> 
+				<li><a href="/profile">Account</a></li> 
 			<%}%>
+            <li><a href="/support">Support</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
