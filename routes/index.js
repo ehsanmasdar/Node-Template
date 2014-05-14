@@ -32,8 +32,7 @@ router.get('/register',  function(req, res) {
 });
 router.get('/support',function(req, res) {
 	res.render('support.html', {
-			isauthed: req.isAuthenticated(), 
-			welcome : req.user.username
+			isauthed: req.isAuthenticated()
 	});
 });
 router.get('/profile', isLoggedIn, function(req, res) {
