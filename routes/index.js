@@ -30,6 +30,9 @@ router.get('/token', function(req, res) {
 router.get('/register', function(req, res) {
   res.redirect('login/register');
 });
+router.get('/settings', function(req, res) {
+  res.render('settings.html');
+});
 router.get('/profile', isLoggedIn, function(req, res) {
   console.log(req.user);
   res.render('profile.html',{
