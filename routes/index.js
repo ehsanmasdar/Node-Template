@@ -40,7 +40,7 @@ router.get('/profile', isLoggedIn, function(req, res) {
   res.render('profile.html',{
 			user :  req.user, // get the user out of session and pass to template
 			isauthed: req.isAuthenticated(), 
-			welcome : user.username
+			welcome : req.user.username
 	});
 });
 router.get('/logout', function(req, res) {
