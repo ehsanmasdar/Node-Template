@@ -56,6 +56,13 @@ router.get('/logout', function(req, res) {
 	req.logout();
 	res.redirect('/');
 });
+router.get('/teacher', function(req, res) {
+	res.render('teacher.html', {
+				isauthed: req.isAuthenticated(),
+				welcome : req.user.username,
+				teachername : req.query.name
+	});
+});
 // route middleware to make sure a user is logged in
 function isLoggedIn(req, res, next) {
 
