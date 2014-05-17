@@ -1,8 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var mysql = require('mysql');
-var connection;
-connection = mysql.createConnection({
+var connection = mysql.createConnection({
       host     : 'ehsandev.com',
       user     : 'duedates',
       password : 'lasa2k16',
@@ -26,9 +25,6 @@ router.get('/token', function(req, res) {
       }
    });
   res.redirect('/');
-});
-router.get('/register',  function(req, res) {
-  res.redirect('login/register');
 });
 router.get('/support',function(req, res) {
 	console.log(req.user);

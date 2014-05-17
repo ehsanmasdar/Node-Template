@@ -9,13 +9,13 @@
     <meta name="author" content="">
     <link rel="shortcut icon" href="../../assets/ico/favicon.ico">
 
-    <title>DueDates-DEV!!!!!!!!!!!</title>
+    <title>Node Template</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="../styles/signup.css" rel="stylesheet">
+    <link href="/styles/login.css" rel="stylesheet">
 
     <!-- Just for debugging purposes. Don't actually copy this line! -->
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
@@ -38,7 +38,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#" style="color:red;">DueDates-DEV!!!!!!!!!!!</a>
+          <a class="navbar-brand" href="#">Node Template</a>
         </div>
         <div class="collapse navbar-collapse">
              <% if (!isauthed) { %>
@@ -51,7 +51,7 @@
                 <input name = "password" type="password" placeholder="Password" class="form-control">
                </div>
                <button type="submit" class="btn btn-success">Sign in</button>
-	           <input class="btn btn-s btn-info" type="button" value="Sign up" onClick="document.location.href='/login/register';">
+	           <input class="btn btn-s btn-info" type="button" value="Sign up" onClick="document.location.href='/register/';">
             </form>
           <% }  else { %>
           	<form class="navbar-form navbar-right" role="form" action="/logout" id="signout">
@@ -64,7 +64,6 @@
 			<%if(isauthed){%>
 				<li><a href="/profile">Account</a></li> 
 			<%}%>
-            <li><a href="/support">Support</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
@@ -73,20 +72,6 @@
 	<% if (message.length > 0) { %>
 		<div class="alert alert-danger"><%= message %></div>
 	<% } %>
-	<% if (isauthed) { %>
-		<div id="list">
-			<p>
-				<iframe src="../static/list.txt" width=200 height=600 frameborder=0 >
-				</iframe>
-			</p>
-		</div>
-    <% } %>
-    <!--<h1  align="center"><%= welcome %>
-        <% if (isauthed) { %>
-            You can find your profile <a href="./profile">here</a>
-        <% } %>
-    </h1>-->
-
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->

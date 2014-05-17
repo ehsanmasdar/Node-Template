@@ -1,3 +1,16 @@
+var mysql = require('mysql');
+/*--------START CONFIG INFORMATION--------*/
+
+//port of the app
+var port = 8081;
+//mysql server
+var connection = mysql.createConnection({
+      host     : 'ehsandev.com',
+      user     : 'duedates',
+      password : 'lasa2k16',
+      database : 'duedates',
+    });
+/*--------END CONFIG INFORMATION--------*/
 var express = require('express');
 var path = require('path');
 var favicon = require('static-favicon');
@@ -7,19 +20,11 @@ var bodyParser = require('body-parser');
 
 var routes = require('./routes/index');
 var login = require('./routes/login');
+var register = require('./routes/register');
 var passport = require('passport')
   , LocalStrategy = require('passport-local').Strategy;
-var mysql = require('mysql');
 var flash = require('connect-flash');
-var connection;
 var session = require('express-session');
-connection = mysql.createConnection({
-      host     : 'ehsandev.com',
-      user     : 'duedates',
-      password : 'lasa2k16',
-      database : 'duedates',
-    });
-
 connection.connect(function(err) {
   // connected! (unless `err` is set)
    if(err != null)
@@ -45,20 +50,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use("/styles", express.static(__dirname + '/styles'));
 app.use("/bootstrap", express.static(__dirname + '/bootstrap'));
 app.use("/static", express.static(__dirname + '/static'));
-
 app.use('/', routes);
 app.use('/login', login);
-
-// Error handlers
-
-// Since this is the last non-error-handling
-// middleware use()d, we assume 404, as nothing else
-// responded.
-
-// $ curl http://localhost:3000/notfound
-// $ curl http://localhost:3000/notfound -H "Accept: application/json"
-// $ curl http://localhost:3000/notfound -H "Accept: text/plain"
-
+app.use('/register', register);
+// Error handling 
 app.use(function(req, res, next){
   res.status(404);
 
@@ -77,19 +72,6 @@ app.use(function(req, res, next){
   // default to plain-text. send()
   res.type('txt').send('Not found');
 });
-
-// error-handling middleware, take the same form
-// as regular middleware, however they require an
-// arity of 4, aka the signature (err, req, res, next).
-// when connect has an error, it will invoke ONLY error-handling
-// middleware.
-
-// If we were to next() here any remaining non-error-handling
-// middleware would then be executed, or if we next(err) to
-// continue passing the error, only error-handling middleware
-// would remain being executed, however here
-// we simply respond with an error page.
-
 app.use(function(err, req, res, next){
   // we may use properties of the error object
   // here and next(err) appropriately, or if
@@ -97,16 +79,7 @@ app.use(function(err, req, res, next){
   res.status(err.status || 500);
   res.render('500', { error: err });
 });
-
-var port = process.env.OPENSHIFT_NODEJS_PORT || 8081;
-if (typeof process.env.OPENSHIFT_NODEJS_PORT != "undefined"){
-    console.log("Detected Openshift!");
-    var ip = process.env.OPENSHIFT_NODEJS_IP || "127.0.0.1";
-    var server = app.listen(port,ip);
-}
-else{
-   var server = app.listen(port);
-}
+var server = app.listen(port);
 console.log(server.address());
 
 module.exports = app;

@@ -1,5 +1,10 @@
-#THIS IS A DEV BRANCH
-Welcome to the git for all things DueDates! This revolutionary website aims to offer a crowdsourced, scalable, and beautiful way to stay informed on the latest from all your classes. 
-
-This repo is connected to webhooks, for easy development workflow. Whenever a commit is pushed to master, the new commit  is pushed to ehsandev.com:8080 and rebuilt automatically. 
-
+#Node-Template
+##Welcome
+Welcome to the git for Node-Template. This is a basic node template that implements secure login, signup, and email verification using a mysql database.
+##Setup
+To setup a mysql database, run the included sql script on a mysql account with database creation privileges. 
+Then, launch the app by running 
+```
+npm install
+npm start
+```
