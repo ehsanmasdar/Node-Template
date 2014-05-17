@@ -9,7 +9,7 @@ read dbuser
 echo -n "Enter database user password: "
 read dbpw
  
-db="create database $dbname;GRANT ALL PRIVILEGES ON $dbname.* TO $dbuser@localhost IDENTIFIED BY '$dbpw';FLUSH PRIVILEGES;CREATE TABLE users(username TEXT, realname TEXT, email TEXT, password TEXT, updates INT, id TEXT, emailtoken TEXT, verified INT);"
+db="CREATE DATABASE $dbname;GRANT ALL PRIVILEGES ON $dbname.* TO $dbuser@localhost IDENTIFIED BY '$dbpw';FLUSH PRIVILEGES;USE $dbname;CREATE TABLE users(username TEXT, realname TEXT, email TEXT, password TEXT, updates INT, id TEXT, emailtoken TEXT, verified INT);"
 mysql -u root -p$rootpw -e "$db"
  
 if [ $? != "0" ]; then
