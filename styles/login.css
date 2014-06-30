@@ -1,0 +1,25 @@
+body {
+  padding-top: 50px;
+}
+.starter-template {
+  padding: 40px 15px;
+  text-align: center;
+}
+#teacherlist{
+	position: absolute;
+   left: 0;
+   width: 100%;
+	height:100%;
+	width:300px;
+	border:1px solid #ccc;
+	font:16px/26px Georgia, Garamond, Serif;
+	overflow:auto; 
+	float=center;
+	margin-top:-50px;
+	padding-top: 50px;
+}
+#signup{
+}
+#signin{
+	padding-right: 5px;
+}
